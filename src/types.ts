@@ -4,7 +4,7 @@ export type ChatGptMessage = {
 }
 
 export type ChatGptResponseMessage = {
-    role: string,
+    role: ChatGptRoles,
     content: string,
     finish_reason: string,
     index: number
@@ -16,7 +16,16 @@ type ChatGptUsage = {
     total_tokens: number
 }
 
-export type ChatGptResponse = {
+export type ChatGptErrorResponse = {
+    error: {
+        message: string,
+        type: string,
+        param: any,
+        code: string
+    }
+}
+
+export type ChatGptSuccessResponse = {
     id: string,
     object: string,
     created: number,
@@ -24,7 +33,17 @@ export type ChatGptResponse = {
     choices: ChatGptResponseMessage[]
 }
 
+export type ChatGptResponse = ChatGptSuccessResponse | ChatGptErrorResponse;
+
 export type ChatGptRequest = {
     model: string,
     messages: ChatGptMessage[]
 }
+
+export enum ChatGptRoleList {
+    USER = 'user',
+    SYSTEM = 'system',
+    ASSISTANT = 'assistant'
+}
+
+export type ChatGptRoles = ChatGptRoleList.USER | ChatGptRoleList.ASSISTANT | ChatGptRoleList.SYSTEM;

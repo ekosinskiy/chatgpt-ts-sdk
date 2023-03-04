@@ -27,9 +27,61 @@ npm i ts-chatgpt-api
 * Go to Manage Account -> API Keys or go to this [link](https://platform.openai.com/account/api-keys)
 * Create new secret key by clicking **+ Create new secret key**
 
+## API
+
+#### setAiModel(aiModel: string): void
+
+Set AI model, right now the latest AI model is **gpt-3.5-turbo**.
+It used by default.
+
+#### setRole(role: ChatGptRoles): void
+
+Set role for message. Possible roles are "system", "user", or "assistant".
+There is pre-defined enum with values. It calls **ChatGptRoleList**
+
+#### addMessage(role: ChatGptRoles, content: string): void
+
+Add message which will be sent to ChatGPT.
+
+#### getAnswer(content: string): Promise<ChatGptResponse>
+
+Get answer for single request. Response example is:
+```json
+{
+ 'id': 'chatcmpl-6p9XYPYSTTRi0xEviKjjilqrWU2Ve',
+ 'object': 'chat.completion',
+ 'created': 1677649420,
+ 'model': 'gpt-3.5-turbo',
+ 'usage': {'prompt_tokens': 56, 'completion_tokens': 31, 'total_tokens': 87},
+ 'choices': [
+   {
+    'message': {
+      'role': 'assistant',
+      'content': 'The 2020 World Series was played in Arlington, Texas at the Globe Life Field, which was the new home stadium for the Texas Rangers.'},
+    'finish_reason': 'stop',
+    'index': 0
+   }
+  ]
+}
+```
+
+#### processMultipleMessages(): Promise<ChatGptResponse>
+
+Get answer for multiple request.
+
 ## Usage
 
+#### Single request
 ```ts
 const buildRequest = new BuildRequest('MY_GPT_API_KEY');
 const response = await buildRequest.getAnswer('tell me about yourself');
+```
+
+#### Multiple requests
+
+```ts
+const buildRequest = new BuildRequest('MY_GPT_API_KEY');
+buildRequest.addMessage(ChatGptRoleList.SYSTEM, 'tell me about yourself');
+buildRequest.addMessage(ChatGptRoleList.USER, 'Translate from English to French');
+const response = await buildRequest.processMultipleMessages();
 ```
