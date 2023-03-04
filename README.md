@@ -19,5 +19,11 @@ it easier to write reliable and maintainable code.
 Install 
 
 ```shell
-npm i eugenekos/
+npm i ts-chatgpt-api
+```
+
+## Usage
+
+```ts
+
 ```

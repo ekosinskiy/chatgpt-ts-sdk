@@ -1,6 +1,6 @@
-import BuildRequest from './build-request';
+import BuildRequest from '../build-request';
 
-const API_KEY = 'PUT_YOUR_API_KEY_HERE';
+const API_KEY = 'YOU_CHAT_GPT_API';
 
 
 (async () => {
