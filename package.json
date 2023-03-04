@@ -1,18 +1,28 @@
 {
   "name": "ts-chatgpt-api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node example/index.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ekosinskiy/chatgpt-ts-sdk"
   },
+  "keywords": [
+    "ChatGPT",
+    "Typescript",
+    "OpenAI",
+    "Chatbot",
+    "API Development",
+    "Chatting Agent"
+  ],
   "author": "Eugene Kosynskyi",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekosinskiy/chatgpt-ts-sdk/issues"
+  },
   "dependencies": {
     "@types/node": "^18.14.6",
     "@types/node-fetch": "^2.6.2",
