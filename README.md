@@ -14,16 +14,22 @@ developers can take advantage of its strong typing and other features that make
 it easier to write reliable and maintainable code. 
 
 
-## Usage
+## Install
 
-Install 
+Run next command
 
 ```shell
 npm i ts-chatgpt-api
 ```
+## How to get my ChatGPT API key
+
+* Create account and login by this [link](https://platform.openai.com/)
+* Go to Manage Account -> API Keys or go to this [link](https://platform.openai.com/account/api-keys)
+* Create new secret key by clicking **+ Create new secret key**
 
 ## Usage
 
 ```ts
-
+const buildRequest = new BuildRequest('MY_GPT_API_KEY');
+const response = await buildRequest.getAnswer('tell me about yourself');
 ```
