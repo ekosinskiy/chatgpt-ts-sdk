@@ -1,5 +1,9 @@
 import {ChatGptMessage, ChatGptRoleList, ChatGptRoles, ChatGptResponse} from './types';
 
+/**
+ * @deprecated
+ * This class is used for backward capability
+ */
 export default class BuildRequest {
 
     // list of messages which will send by Chat GPT API

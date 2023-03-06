@@ -1,6 +1,11 @@
-import {ChatGptMessage, ChatGptRoleList, ChatGptRoles, ChatGptResponse} from './types';
+import {ChatGptMessage, ChatGptRoleList, ChatGptRoles, ChatGptResponse, ChatGptCompletionParams} from './types';
 
-export default class BuildRequest {
+const chatGptURL = 'https://api.openai.com/v1/chat/completions';
+
+/**
+ * Main class for make requests
+ */
+export default class ChatGptApi {
 
     // list of messages which will send by Chat GPT API
     private messages: ChatGptMessage[] = [];
@@ -36,12 +41,14 @@ export default class BuildRequest {
 
     /**
      * Build request data for sending to ChatGPT API
+     * @param completionParams
      * @private
      */
-    private buildRequest(): any {
+    private buildRequest(completionParams?: ChatGptCompletionParams): any {
         const requestBody = {
             model: this.aiModel,
-            messages: this.messages
+            messages: this.messages,
+            ...completionParams
         };
         return {
             method: 'POST',
@@ -67,10 +74,11 @@ export default class BuildRequest {
 
     /**
      * Return answers for multiple requests
+     * @param completionParams
      */
-    public async processMultipleMessages(): Promise<ChatGptResponse> {
-        const requestData = this.buildRequest();
-        const response = await fetch('https://api.openai.com/v1/chat/completions', requestData);
+    public async processMultipleMessages(completionParams?: ChatGptCompletionParams): Promise<ChatGptResponse> {
+        const requestData = this.buildRequest(completionParams);
+        const response = await fetch(chatGptURL, requestData);
         const jsonResponse: ChatGptResponse = await response.json();
         this.resetMessages();
         return jsonResponse;
@@ -79,12 +87,13 @@ export default class BuildRequest {
     /**
      * Return answer for single request
      * @param content
+     * @param completionParams
      */
-    public async getAnswer(content: string): Promise<ChatGptResponse> {
+    public async getAnswer(content: string, completionParams?: ChatGptCompletionParams): Promise<ChatGptResponse> {
         this.resetMessages();
         this.addMessage(this.role, content);
-        const requestData = this.buildRequest();
-        const response = await fetch('https://api.openai.com/v1/chat/completions', requestData);
+        const requestData = this.buildRequest(completionParams);
+        const response = await fetch(chatGptURL, requestData);
         const jsonResponse: ChatGptResponse = await response.json();
         return jsonResponse;
     }
