@@ -29,6 +29,14 @@ npm i ts-chatgpt-api
 
 ## API
 
+#### enableDebugging(): void 
+
+Print debug information.
+
+#### disableDebugging(): void
+
+Stop printing debug information.
+
 #### setAiModel(aiModel: string): void
 
 Set AI model, right now the latest AI model is **gpt-3.5-turbo**.

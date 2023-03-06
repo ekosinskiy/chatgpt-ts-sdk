@@ -9,18 +9,33 @@ export default class ChatGptApi {
 
     // list of messages which will send by Chat GPT API
     private messages: ChatGptMessage[] = [];
+    private isDebug = false;
 
     constructor(
         private apiKey: string,
         private aiModel = 'gpt-3.5-turbo',
         private role: ChatGptRoles = ChatGptRoleList.USER) {}
 
+    public enableDebugging(): void {
+        this.isDebug = true;
+    }
+
+    public disableDebugging(): void {
+        this.isDebug = false;
+    }
+
     /**
      * Set AI engine model for generating response
      * @param aiModel
      */
     public setAiModel(aiModel: string): void {
+        this.printLog('call setAiModel');
+        this.printLog('set AI model as', aiModel);
         this.aiModel = aiModel;
+    }
+
+    private printLog(...params: any): void {
+        console.log((new Date()).toISOString(),"\t",JSON.stringify(params, null, 4));
     }
 
     /**
@@ -28,6 +43,8 @@ export default class ChatGptApi {
      * @param role
      */
     public setRole(role: ChatGptRoles): void {
+        this.printLog('call setRole');
+        this.printLog('set role', role);
         this.role = role;
     }
 
@@ -36,6 +53,7 @@ export default class ChatGptApi {
      * @private
      */
     private resetMessages(): void {
+        this.printLog('clean message array');
         this.messages = [];
     }
 
@@ -50,7 +68,8 @@ export default class ChatGptApi {
             messages: this.messages,
             ...completionParams
         };
-        return {
+        this.printLog('prepare request body', requestBody);
+        const requestData = {
             method: 'POST',
             body: JSON.stringify(requestBody),
             headers: {
@@ -58,6 +77,8 @@ export default class ChatGptApi {
                 Authorization: `Bearer ${this.apiKey}`
             }
         };
+        this.printLog('full request data', requestData);
+        return requestData;
     }
 
     /**
@@ -66,10 +87,13 @@ export default class ChatGptApi {
      * @param content
      */
     public addMessage(role: ChatGptRoles, content: string): void {
-        this.messages.push({
+        this.printLog('call addMessage');
+        const newMessage:ChatGptMessage = {
             role,
             content
-        });
+        };
+        this.printLog('add new message', newMessage);
+        this.messages.push(newMessage);
     }
 
     /**
@@ -77,6 +101,7 @@ export default class ChatGptApi {
      * @param completionParams
      */
     public async processMultipleMessages(completionParams?: ChatGptCompletionParams): Promise<ChatGptResponse> {
+        this.printLog('call processMultipleMessages');
         const requestData = this.buildRequest(completionParams);
         const response = await fetch(chatGptURL, requestData);
         const jsonResponse: ChatGptResponse = await response.json();
