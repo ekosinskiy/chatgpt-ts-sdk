@@ -1,7 +1,5 @@
 import BuildRequest from '../src/build-request';
-
-const API_KEY = 'YOU_CHAT_GPT_API';
-
+import {API_KEY} from './api-key';
 
 (async () => {
     const buildRequest = new BuildRequest(API_KEY);
