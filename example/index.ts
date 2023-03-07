@@ -1,10 +1,9 @@
-import BuildRequest from '../src/build-request';
-
-const API_KEY = 'YOU_CHAT_GPT_API';
-
+import {API_KEY} from './api-key';
+import ChatGptApi from '../src/chat-gpt-api';
 
 (async () => {
-    const buildRequest = new BuildRequest(API_KEY);
-    const response = await buildRequest.getAnswer('write a short story about space');
+    const chatGptApi = new ChatGptApi(API_KEY);
+    chatGptApi.enableDebugging();
+    const response = await chatGptApi.getAnswer('write a short story about space');
     console.log('resp', JSON.stringify(response, null, 4));
 })();

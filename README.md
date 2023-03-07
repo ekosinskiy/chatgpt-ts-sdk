@@ -29,6 +29,14 @@ npm i ts-chatgpt-api
 
 ## API
 
+#### enableDebugging(): void 
+
+Print debug information.
+
+#### disableDebugging(): void
+
+Stop printing debug information.
+
 #### setAiModel(aiModel: string): void
 
 Set AI model, right now the latest AI model is **gpt-3.5-turbo**.
@@ -73,15 +81,37 @@ Get answer for multiple request.
 
 #### Single request
 ```ts
-const buildRequest = new BuildRequest('MY_GPT_API_KEY');
-const response = await buildRequest.getAnswer('tell me about yourself');
+const chatGptApi = new ChatGptApi('MY_GPT_API_KEY');
+const response = await chatGptApi.getAnswer('tell me about yourself');
 ```
-
 #### Multiple requests
 
 ```ts
-const buildRequest = new BuildRequest('MY_GPT_API_KEY');
-buildRequest.addMessage(ChatGptRoleList.SYSTEM, 'tell me about yourself');
-buildRequest.addMessage(ChatGptRoleList.USER, 'Translate from English to French');
-const response = await buildRequest.processMultipleMessages();
+const chatGptApi = new ChatGptApi('MY_GPT_API_KEY');
+chatGptApi.addMessage(ChatGptRoleList.SYSTEM, 'tell me about yourself');
+chatGptApi.addMessage(ChatGptRoleList.USER, 'Translate from English to French');
+const response = await chatGptApi.processMultipleMessages();
+```
+
+## Override completion params
+
+You can override the default model (gpt-3.5-turbo-0301) and any [OpenAI chat completion params](https://platform.openai.com/docs/api-reference/chat/create) using completionParam
+
+#### Single request with completion parameters
+
+```ts
+const chatGptApi = new ChatGptApi('MY_GPT_API_KEY');
+const response = await chatGptApi.getAnswer('tell me about yourself', {top_n: 0.4});
+```
+
+
+#### Multiple requests with completion parameters
+
+```ts
+const chatGptApi = new ChatGptApi('MY_GPT_API_KEY');
+chatGptApi.addMessage(ChatGptRoleList.SYSTEM, 'tell me about yourself');
+chatGptApi.addMessage(ChatGptRoleList.USER, 'Translate from English to French');
+const response = await chatGptApi.processMultipleMessages({
+    stream: true
+});
 ```
