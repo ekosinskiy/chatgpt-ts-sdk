@@ -35,7 +35,9 @@ export default class ChatGptApi {
     }
 
     private printLog(...params: any): void {
-        console.log((new Date()).toISOString(),"\t",JSON.stringify(params, null, 4));
+        if (this.isDebug) {
+            console.log((new Date()).toISOString(),"\t",JSON.stringify(params, null, 4));
+        }
     }
 
     /**
