@@ -5,7 +5,7 @@ const chatGptURL = 'https://api.openai.com/v1/chat/completions';
 /**
  * Main class for make requests
  */
-export default class ChatGptApi {
+export class ChatGptApi {
 
     // list of messages which will send by Chat GPT API
     private messages: ChatGptMessage[] = [];

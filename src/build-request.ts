@@ -4,7 +4,7 @@ import {ChatGptMessage, ChatGptRoleList, ChatGptRoles, ChatGptResponse} from './
  * @deprecated
  * This class is used for backward capability
  */
-export default class BuildRequest {
+export class BuildRequest {
 
     // list of messages which will send by Chat GPT API
     private messages: ChatGptMessage[] = [];

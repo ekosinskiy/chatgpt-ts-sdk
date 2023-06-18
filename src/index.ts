@@ -1,3 +1,3 @@
 export * from './types';
-export * from './chat-gpt-api';
-export * from './build-request';
+export {ChatGptApi} from './chat-gpt-api';
+export {BuildRequest} from './build-request';
